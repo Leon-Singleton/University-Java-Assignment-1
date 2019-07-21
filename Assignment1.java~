@@ -1,0 +1,50 @@
+// Name: Leon Singleton
+// User Name:aca16ls
+
+import sheffield.* ;
+public class Assignment1 {
+	public static void main(String[] args) {
+		//Assigns the Easyreader method to a variable so i can read input from the console
+		EasyReader Keyboard = new EasyReader();
+		//Asks the user to enter values for their decimal currecny and and allows the user to input them
+		double pounds = Keyboard.readDouble("How many pounds? ");
+		double shillings = Keyboard.readDouble("How many Shillings? ");
+		double pence = Keyboard.readDouble("How many Pence? ");
+		//Calculates the decimal currency based on the user's inputs
+		double decimalCurrency = (pounds + (shillings / 20) + (pence/240));
+		//Writes the decimal currency that has been calculated back to the console and formats it to 2 decimal places
+		System.out.printf("That is %.2f in decimal currency", decimalCurrency);
+		//Moves the console to the next line
+		System.out.println("");
+		
+		//Assigns a new easyreader method to a variable in order to read from the text file money.txt
+		EasyReader fileInput = new EasyReader("money.txt") ;
+		//Reads the first line in the text file and assigns it to a variable
+		String inputNum = fileInput.readString();
+		//Using the string obtained from the file the substring method extracts just the number from the file
+		inputNum = inputNum.substring(26,inputNum.length() -0) ;
+		//The number is then converted from a string to a double in order to carry out calculations
+		double numConversion = Double.valueOf(inputNum);
+		
+		//creates new integer variables to represent and calculate the number of each type of coin
+		int pounds1 = (int)numConversion;
+		int shillings1 = (int)((numConversion - pounds1) / 0.05);
+		//I used a shortened value to represent one pence in new money, otherwise the calculation would tend towards infinity
+		int pence1 = (int)((numConversion - pounds1 - (shillings1 * 0.05)) / (0.0041666));
+		//Outputs the number of each type of coin in old money the in an appropriate format
+		System.out.println(inputNum + " in old money is " + "L" + pounds1 + "." + shillings1 + "s" + "." + pence1 + "d");
+		
+		//Here I use a format for each of the items in the output line and then right-justify them in a table format
+		System.out.printf("%7s %4s %2s %2s", "old", "L", "s", "d");
+		System.out.println("");
+		System.out.printf("%7s %4s %2s %2s", inputNum, pounds1, shillings1, pence1);
+		//I use the same method above in order to convert the second number in the file to old money
+		double inputNum2 = fileInput.readDouble();
+		int pounds2 = (int)inputNum2;
+		int shillings2 = (int)((inputNum2 - pounds2) / 0.05);
+		int pence2 = (int)((inputNum2 - pounds2 - (shillings2 * 0.05)) / (0.0041666));
+		System.out.println("");
+		//I then write out the old money equivalent of the second number in the table format
+		System.out.printf("%7s %4s %2s %2s", inputNum2, pounds2, shillings2, pence2);
+	}
+}
